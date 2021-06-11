@@ -41,4 +41,41 @@ RSpec.describe 'flights index page' do
     expect(page).to have_content(@passenger_3.name)
     expect(page).to have_content(@passenger_4.name)
   end
+
+  it "Should remove that passenger from that flight" do
+    # User Story 2, Remove a Passenger from a Flight
+    # As a visitor
+    # When I visit the flights index page
+    # Next to each passengers name
+    # I see a link or button to remove that passenger from that flight
+    # When I click on that link/button
+    # I'm returned to the flights index page
+    # And I no longer see that passenger listed under that flight
+    # (Note: you should not destroy the passenger record entirely)
+    visit "/flights"
+    expect(current_path).to eq("/flights")
+    expect(page).to have_content(@flight_1.number)
+    expect(page).to have_content(@airline_1.name)
+    expect(page).to have_content(@passenger_1.name)
+    expect(page).to have_link("Remove #{@passenger_1.name}")
+
+    expect(page).to have_content(@flight_2.number)
+    expect(page).to have_content(@airline_1.name)
+    expect(page).to have_content(@passenger_2.name)
+    expect(page).to have_link("Remove #{@passenger_2.name}")
+
+    expect(page).to have_content(@flight_3.number)
+    expect(page).to have_content(@airline_1.name)
+    expect(page).to have_content(@passenger_3.name)
+    expect(page).to have_link("Remove #{@passenger_3.name}")
+
+    expect(page).to have_content(@passenger_4.name)
+    expect(page).to have_link("Remove #{@passenger_4.name}")
+    click_link ("Remove #{@passenger_4.name}")
+    expect(current_path).to eq("/flights")
+    expect(page).to_not have_content(@passenger_4.name)
+    expect(page).to_not have_link("Remove #{@passenger_4.name}")
+    save_and_open_page
+    
+  end
 end

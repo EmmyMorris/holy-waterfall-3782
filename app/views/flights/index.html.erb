@@ -5,6 +5,8 @@
   <p>Airline: <%= flight.airline.name %></p>
   <p>Passengers: </p>
   <% flight.passengers.each do |passenger| %>
-    <p>Name: <%= passenger.name %></p><br><br>
+    <p>Name: <%= passenger.name %></p>
+    <%= link_to "Remove #{passenger.name}", passenger_flight_path(id: passenger.passenger_flights.find_by(flight_id: flight.id).id), method: :delete %>
+    <br><br>
   <% end %>
 <% end %>
